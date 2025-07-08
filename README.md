@@ -104,7 +104,7 @@ If you find this work useful, please cite:
 For questions or collaborations, feel free to reach out:
 
 - Bruno Fernandes: `bruno.fernandes@upe.br`
-- [Link to Paper (if applicable)](https://...)
+- [Link to Paper (coming soon)](https://...)
 
 ---
 
