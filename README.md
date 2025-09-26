@@ -47,7 +47,7 @@ This **extra collaboration step** reduces local bias and accelerates convergence
 
 ## 🚀 Running the Notebook
 
-Open [`FedP2PAvg_Hackathon.ipynb`](./FedP2PAvg_Hackathon.ipynb) in **Google Colab** or locally:
+Open [`FedP2PAvg_Hackathon.ipynb`](./FedP2PAvg.ipynb) in **Google Colab** or locally:
 
 1. Select the dataset and run mode in the config cell:
    ```python
