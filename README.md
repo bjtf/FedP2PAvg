@@ -46,12 +46,6 @@ git clone https://github.com/bjtf/FedP2PAvg.git
 cd FedP2PAvg
 ```
 
-Install required dependencies:
-
-```bash
-pip install -r requirements.txt
-```
-
 ## 🚀 Running the Code
 
 To run a simulation on MNIST with 10 clients:
