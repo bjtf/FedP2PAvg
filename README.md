@@ -1,105 +1,72 @@
 # FedP2PAvg: A Peer-to-Peer Collaborative Framework for Federated Learning in Non-IID Scenarios
 
-[![Paper @ ICANN 2025](https://img.shields.io/badge/ICANN%202025-Accepted-blue)](https://link_to_paper_if_available)
+[![Paper @ ICANN 2025](https://img.shields.io/badge/ICANN%202025-Accepted-blue)]([https://link_to_paper_if_available](https://link.springer.com/chapter/10.1007/978-3-032-04558-4_31))
 
-This repository contains the official implementation of the paper:
+This repository contains the official **notebook-based implementation** of the paper:
 
 **"FedP2PAvg: A Peer-to-Peer Collaborative Framework for Federated Learning in Non-IID Scenarios"**,  
 accepted at the *International Conference on Artificial Neural Networks (ICANN 2025)*.
 
+---
+
 ## 📌 Overview
 
-**FedP2PAvg** is a federated learning framework that introduces a peer-to-peer (P2P) refinement phase in each training round. Unlike classical approaches like FedAvg, which rely solely on local training followed by central aggregation, FedP2PAvg adds an extra layer of collaboration: each client's model is sent to a randomly selected peer for further training before the global update. This strategy reduces model bias and accelerates convergence in highly imbalanced and non-IID data settings.
+**FedP2PAvg** is a federated learning algorithm that introduces a **peer-to-peer (P2P) refinement phase** in each training round.  
+- **FedAvg baseline:** clients train locally on their own partitions → models are averaged by the central server.  
+- **FedP2PAvg extension:** before aggregation, each client’s model is **trained for a short phase on another client’s data** (randomly or via a selection policy).  
+
+This **extra collaboration step** reduces local bias and accelerates convergence, especially under **non-IID and imbalanced splits**.
+
+---
 
 ## 🧠 Key Features
 
-- **Peer-to-peer refinement** of local models before aggregation
-- **Improved convergence** and accuracy in non-IID scenarios
-- **Compatibility** with classical FedAvg architecture
-- **Evaluation** on MNIST, Fashion-MNIST, and CIFAR-10 with Dirichlet α=0.1
+- **Peer-to-peer refinement** between clients before aggregation  
+- **Non-IID partitioning** via Dirichlet distribution  
+- **Support for multiple datasets:** MNIST, Fashion-MNIST, CIFAR-10  
+- **Plug-and-play models:** CNNs tailored for each dataset (with GroupNorm or BatchNorm for stability)  
+- **Colab-ready notebook:** easy to run and modify, no custom runners required  
 
-## 📊 Results Summary
-
-| Dataset        | Accuracy (FedP2PAvg) | Rounds to Target Accuracy |
-|----------------|----------------------|----------------------------|
-| MNIST          | 98.17%               | 16                         |
-| Fashion-MNIST  | 84.35%               | 20                         |
-| CIFAR-10       | 67.49%               | 125                        |
+---
 
 ## 🧪 Experimental Setup
 
-- **Data partitioning**: Dirichlet distribution with α = 0.1
-- **Local training**: SGD optimizer, learning rate 0.01, momentum 0.5
-- **Architectures**:
-  - MNIST / Fashion-MNIST: 2 conv layers + 2 FC layers + dropout
-  - CIFAR-10: VGG11
-- **Rounds**:
-  - MNIST & Fashion-MNIST: 140 rounds
-  - CIFAR-10: 300 rounds
+- **Partitioning:** Dirichlet distribution, α = 0.1 (default)  
+- **Clients:** 10 clients (configurable)  
+- **Local training:**  
+  - Optimizer: SGD  
+  - Recommended for CIFAR-10: `lr=0.1`, `momentum=0.9`,
+  - Recommended for MNIST / Fashion-MNIST: `lr=0.1`, `momentum=0.5`,
+  - Local epochs: 2-10
+- **Models:**  
+  - **MNIST / Fashion-MNIST:** 2 conv + FC baseline (`NetMnist`)  
+  - **CIFAR-10:** simplified CNN with GroupNorm and Global Average Pooling (`SimpleFLNetCifar10`)  
+- **Evaluation:** centralized test set after each round  
 
-## 🛠️ Installation
+---
 
-Clone this repository:
+## 🚀 Running the Notebook
 
-```bash
-git clone https://github.com/bjtf/FedP2PAvg.git
-cd FedP2PAvg
-```
+Open [`FedP2PAvg_Hackathon.ipynb`](./FedP2PAvg_Hackathon.ipynb) in **Google Colab** or locally:
 
-## 🚀 Running the Code
+1. Select the dataset and run mode in the config cell:
+   ```python
+   RUN_MODE = "fedp2pavg"   # or "fedavg"
+   DATASET  = "cifar10"     # "mnist", "fashionmnist", "cifar10"
+2.Adjust hyperparameters (e.g., GLOBAL_ROUNDS, LOCAL_EPOCHS, DIRICHLET_ALPHA).
+3. Run all cells.
+4. Monitor training logs and plots to compare FedAvg vs FedP2PAvg.
 
-To run a simulation on MNIST with 10 clients:
-
-```bash
-python main.py --dataset mnist --clients 10 --alpha 0.1 --rounds 140
-```
-
-Other options:
-
-- `--dataset`: `mnist`, `fmnist`, or `cifar10`
-- `--alpha`: Dirichlet concentration parameter (e.g., 0.1)
-- `--peer-refinement`: enable/disable peer phase
-- `--rounds`: total global rounds
-
-## 📂 Repository Structure
-
-```
-├── main.py               # Main training script
-├── models/               # Model architectures
-├── utils/                # Helper functions and metrics
-├── data/                 # Data loading and partitioning
-├── results/              # Output logs and results
-└── README.md             # This file
-```
-
-## 🧩 Citation
-
-If you find this work useful, please cite:
-
-```bibtex
+If you use this code, please cite:
 @inproceedings{fernandes2025fedp2pavg,
   title={FedP2PAvg: A Peer-to-Peer Collaborative Framework for Federated Learning in Non-IID Scenarios},
   author={Fernandes, Bruno J. T. and Freire, Agostinho and de Andrade, João V. R. and Silva, Leandro H. S. and Navarro-Guerrero, Nicolás},
   booktitle={34th International Conference on Artificial Neural Networks (ICANN)},
   year={2025}
 }
-```
 
-## 👥 Authors
+📬 Contact
+Bruno Fernandes: bruno.fernandes@upe.br
 
-- Bruno J. T. Fernandes (UPE, Leibniz Universität Hannover)
-- Agostinho Freire (UPE)
-- João V. R. de Andrade (UPE)
-- Leandro H. S. Silva (UPE)
-- Nicolás Navarro-Guerrero (Leibniz Universität Hannover)
+Supported by CAPES, FACEPE, CNPq, and the Alexander von Humboldt Foundation.
 
-## 📬 Contact
-
-For questions or collaborations, feel free to reach out:
-
-- Bruno Fernandes: `bruno.fernandes@upe.br`
-- [Link to Paper (coming soon)](https://...)
-
----
-
-*This work was supported by CAPES, FACEPE, CNPq, and the Alexander von Humboldt Foundation.*
