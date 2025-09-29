@@ -52,7 +52,7 @@ Open [`FedP2PAvg_Hackathon.ipynb`](./FedP2PAvg.ipynb) in **Google Colab** or loc
 1. Select the dataset and run mode in the config cell:
    ```python
    RUN_MODE = "fedp2pavg"   # or "fedavg"
-   DATASET  = "cifar10"     # "mnist", "fashionmnist", "cifar10"
+   DATASET  = "mnist"     # "mnist", "fashionmnist", "cifar10"
 2.Adjust hyperparameters (e.g., GLOBAL_ROUNDS, LOCAL_EPOCHS, DIRICHLET_ALPHA).
 3. Run all cells.
 4. Monitor training logs and plots to compare FedAvg vs FedP2PAvg.
