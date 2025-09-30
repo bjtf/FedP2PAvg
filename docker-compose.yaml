@@ -1,0 +1,30 @@
+services:
+  jupyter:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: joao1998and/fed-retreat:0.0.1
+    container_name: jupyter-lab
+    ports:
+      - "8888:8888"
+    volumes:
+      - ./hackathon:/app
+    environment:
+      # TOKEN ASK FOR IT TO BRUNO FERNANDE
+      JUPYTER_TOKEN: ${JUPYTER_TOKEN}
+      NB_UID: ${NB_UID:-1000}
+      NB_GID: ${NB_GID:-1000}
+    command: >
+      jupyter lab
+      --ip=0.0.0.0
+      --ServerApp.token=${JUPYTER_TOKEN}
+      --LabApp.collaborative=true
+      --allow-root
+    restart: unless-stopped
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: 1
+              capabilities: [gpu]
